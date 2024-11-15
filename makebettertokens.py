@@ -1,27 +1,19 @@
 """
 you give this script some sequences of tokens of the form
+
 V2,V13,V21,V7,V21,V10,V2,V3,V4,V2,V3,V1,V18,V8,V12,V6,0.8
 V13,V2,V8,V2,V22,V12,V2,V2,V4,V2,V2,V1,V18,V8,V12,V6,-0.7
 (one per line, the last entry is a float)
 
-The big difference to makemore is this last entry,
-which we call the score.
-(The model will be pushed towards high values,
-and away from negative values.)
+The big difference to makemore is this last entry which we call the score.
+(The model will be pushed towards high values and away from negative values.)
 
-
-We then train a transformer to produce more things
-like those with positive score, and less like
-those with negative score. The bigger the weight, 
-the more we skew in that direction.
+We then train a transformer to produce more things like those with positive score, and less like
+those with negative score. The bigger the weight, the more we skew in that direction.
 
 We use the REINFORCE algorithm.
 
-This is a very mild adaption of Kaparthy's "makemore"
-implementation of a baby transformer.
-
-Aside new routines to process inputs, create training 
-data etc. the major difference to makemore is in the line
+Aside new routines to process inputs, create training data etc. the major difference to makemore is in the line
 
     logprobs = F.log_softmax(logits,dim=-1)
     scaled_logprobs = scores[:,None,None] * logprobs            
@@ -31,20 +23,17 @@ which replace Kaparthy's
 
     loss = F.cross_entropy(logits.view(-1, logits.size(-1)), targets.view(-1), ignore_index=-1).
 
-One should have basically identical (if slightly slower) 
-performance to makemore on training sets of the form
+One should have basically identical (if slightly slower) performance to makemore on training sets of the form
 
 V2,V13,V21,V7,V21,V10,V2,V3,V4,V2,V3,V1,V18,V8,V12,V6,1
 V13,V2,V8,V2,V22,V12,V2,V2,V4,V2,V2,V1,V18,V8,V12,V6,1
 
 (i.e. when all scores are 1).
 
-Also note that a global scaling of weights results in a
-global scaling of the loss function.
+Also note that a global scaling of weights results in a global scaling of the loss function.
 
-Thus scaling weights by \alpha or scaling learning rate 
-by \alpha should have the same effect. This sugggests to
-me that weights should be roughly in the range [-1,1].
+Thus scaling weights by \alpha or scaling learning rate by \alpha should have the same effect. 
+This sugggests to me that weights should be roughly in the range [-1,1].
 
 Geordie 7/6
 
@@ -186,8 +175,6 @@ class Transformer(nn.Module):
         x = self.transformer.ln_f(x)
         logits = self.lm_head(x)
         
-
-
         # if we are given some desired targets also calculate the loss
         loss = None
         
@@ -196,25 +183,12 @@ class Transformer(nn.Module):
             # logits is of shape (batch, sequence length, number of tokens)
             # scores if of shape (batch,)
             # targets is of shape (batch, sequence length)
-#            print(f"logprobs.shape={logprobs.shape}")
-#            print(f"scaled_logprobs.shape={scaled_logprobs.shape}")
+            # print(f"logprobs.shape={logprobs.shape}")
+            # print(f"scaled_logprobs.shape={scaled_logprobs.shape}")
                         
             logprobs = F.log_softmax(logits,dim=-1)
             scaled_logprobs = scores[:,None,None] * logprobs            
             loss = F.nll_loss(scaled_logprobs.view(-1, logits.size(-1)), targets.view(-1),ignore_index=-1)
-        
-            
-
-            # old code (which I think is wrong):
-        
-#            scaled_logits = scores[:,None,None] * logits
-#            loss = F.cross_entropy(scaled_logits.view(-1, logits.size(-1)), targets.view(-1), ignore_index=-1)
-            
-            # old code (ignoring scores) from Kaparthy
-        
-            # loss = F.cross_entropy(logits.view(-1, logits.size(-1)), targets.view(-1), ignore_index=-1)
-
-        return logits, loss
 
 # -----------------------------------------------------------------------------
 # helper functions for evaluating and sampling from the model
@@ -257,7 +231,7 @@ def print_samples(num=10):
     steps = train_dataset.get_output_length() - 1 # -1 because we already start with <START> token (index 0)
     X_samp = generate(model, X_init, steps, top_k=top_k, do_sample=True).to('cpu')
     samples = []
-#    train_samples, test_samples, new_samples = [], [], []
+    # train_samples, test_samples, new_samples = [], [], []
     for i in range(X_samp.size(0)):
         # get the i'th row of sampled integers, as python list
         row = X_samp[i, 1:].tolist() # note: we need to crop out the first <START> token
@@ -279,7 +253,7 @@ def write_samples(num=10):
     steps = train_dataset.get_output_length() - 1 # -1 because we already start with <START> token (index 0)
     X_samp = generate(model, X_init, steps, top_k=top_k, do_sample=True).to('cpu')
     samples = []
-#    train_samples, test_samples, new_samples = [], [], []
+    # train_samples, test_samples, new_samples = [], [], []
     for i in range(X_samp.size(0)):
         # get the i'th row of sampled integers, as python list
         row = X_samp[i, 1:].tolist() # note: we need to crop out the first <START> token
@@ -311,10 +285,8 @@ def evaluate(model, dataset, device, batch_size=50, max_batches=None):
     model.train() # reset model back to training mode
     return mean_loss
 
-
 # -----------------------------------------------------------------------------
 # helper functions for creating the training and test Datasets
-
 
 class CharDataset(Dataset):
 
@@ -368,7 +340,7 @@ def create_datasets(input_file):
     words_and_scores = [w.split(",") for w in words_and_scores]
     words, scores = [w[:-1] for w in words_and_scores], np.array([w[-1] for w in words_and_scores], dtype=np.float32)
     
-#    scores = (scores - np.mean(scores)) * np.var(scores)**(-1/2)
+    # scores = (scores - np.mean(scores)) * np.var(scores)**(-1/2)
     
     # a tad hacky: we sort our chars so that it is ordered V1, V2, .... V10, V11 ....
     chars = sorted(list(set([i for word in words for i in word])), key=lambda x: int(x[1:]))
@@ -399,7 +371,6 @@ def create_datasets(input_file):
     test_dataset = CharDataset(test_words, test_scores, chars, max_word_length)
 
     return train_dataset, test_dataset
-
 
 # -----------------------------------------------------------------------------
 
@@ -540,4 +511,3 @@ if __name__ == '__main__':
         # termination conditions
         if args.max_steps >= 0 and step >= args.max_steps:
             break
-
