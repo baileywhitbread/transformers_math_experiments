@@ -22,6 +22,7 @@ import os
 import argparse
 os.environ["TOKENIZERS_PARALLELISM"] = "false"
 
+
 def get_parser():
     parser = argparse.ArgumentParser('Generate training sample of low braids via reservoir sampling')
     # JULIA params
@@ -259,7 +260,11 @@ if __name__ == '__main__':
     if args.is_slurm_job:
         init_signal_handler()
     
+    # Bailey changed this
+    #args.device = "cpu"
     args.device = "cpu" if args.cpu else "cuda"
+    # Bailey changed this
+
     if args.seed < 0:
         args.seed = np.random.randint(1_000_000_000)
     logger.info(f"seed: {args.seed}")

@@ -36,7 +36,6 @@ Thus scaling weights by \alpha or scaling learning rate by \alpha should have th
 This sugggests to me that weights should be roughly in the range [-1,1].
 
 Geordie 7/6
-
 """
 
 import os
