@@ -10,8 +10,8 @@ using Combinatorics
 using Dates 
 # Choose the problem to work on here!
 
-#include("problem_triangle_free.jl")  
-include("problem_4_cycle_free.jl")
+include("problem_triangle_free.jl")  
+#include("problem_4_cycle_free.jl")
 #include("problem_permanent_avoid_123.jl")
 #include("problem_sperner_saturated.jl")
 #include("problem_narrow_admissible_tuples.jl")
