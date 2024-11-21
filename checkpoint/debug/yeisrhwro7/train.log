@@ -1,11 +1,11 @@
-INFO - 11/18/24 15:56:15 - 0:00:00 - ============ Initialized logger ============
-INFO - 11/18/24 15:56:15 - 0:00:00 - batch_size: 32
-                                     command: python fc_loop.py --exp_id "ivlrzwy61c"
-                                     cpu: False
+INFO - 11/21/24 10:59:30 - 0:00:00 - ============ Initialized logger ============
+INFO - 11/21/24 10:59:30 - 0:00:00 - batch_size: 32
+                                     command: python fc_loop.py --exp_id "yeisrhwro7"
+                                     cpu: True
                                      debug: False
                                      debug_slurm: False
-                                     dump_path: checkpoint\debug\ivlrzwy61c
-                                     exp_id: ivlrzwy61c
+                                     dump_path: checkpoint\debug\yeisrhwro7
+                                     exp_id: yeisrhwro7
                                      exp_name: debug
                                      final_database_size: 50000
                                      gen_batch_size: 1000
@@ -40,9 +40,10 @@ INFO - 11/18/24 15:56:15 - 0:00:00 - batch_size: 32
                                      type: transformer
                                      weight_decay: 0.01
                                      world_size: 1
-INFO - 11/18/24 15:56:15 - 0:00:00 - The experiment will be stored in checkpoint\debug\ivlrzwy61c
+INFO - 11/21/24 10:59:30 - 0:00:00 - The experiment will be stored in checkpoint\debug\yeisrhwro7
                                      
-INFO - 11/18/24 15:56:15 - 0:00:00 - Running command: python fc_loop.py
+INFO - 11/21/24 10:59:30 - 0:00:00 - Running command: python fc_loop.py
 
-INFO - 11/18/24 15:56:15 - 0:00:00 - seed: 696107783
-INFO - 11/18/24 15:56:15 - 0:00:00 - JULIA_NUM_THREADS is set to 1
+INFO - 11/21/24 10:59:30 - 0:00:00 - seed: 182747321
+INFO - 11/21/24 10:59:30 - 0:00:00 - JULIA_NUM_THREADS is set to 1
+INFO - 11/21/24 11:00:01 - 0:00:32 - Created checkpoint\debug\yeisrhwro7/temp.txt and training tokenizer...

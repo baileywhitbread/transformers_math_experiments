@@ -173,7 +173,7 @@ function reward(obj)
 end
 
 function reward(db, obj)
-    if haskey(db.objects, obj)
+    if haskey(db.objects, obj) # haskey(db.key::??, obj::Char)
         return db.objects[obj], false
     end
     return reward(obj), true
@@ -184,7 +184,7 @@ function local_search_on_object(db, obj)
     rewards = Vector{REWARD_TYPE}(undef, 0) 
     greedily_expanded_objs = greedy_search_from_startpoint(db, obj)
     for greedily_expanded_obj in greedily_expanded_objs      
-        rew, new = reward(db, greedily_expanded_obj)
+        rew, new = reward(db, greedily_expanded_obj) # reward(db::Database, obj::Char)
         if new
             push!(objects, greedily_expanded_obj)
             push!(rewards, rew)

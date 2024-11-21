@@ -1,11 +1,11 @@
-INFO - 11/18/24 17:01:01 - 0:00:00 - ============ Initialized logger ============
-INFO - 11/18/24 17:01:01 - 0:00:00 - batch_size: 32
-                                     command: python fc_loop.py --exp_id "9k301vgogz"
-                                     cpu: False
+INFO - 11/20/24 13:23:57 - 0:00:00 - ============ Initialized logger ============
+INFO - 11/20/24 13:23:57 - 0:00:00 - batch_size: 32
+                                     command: python fc_loop.py --exp_id "sgg4wnjwyb"
+                                     cpu: True
                                      debug: False
                                      debug_slurm: False
-                                     dump_path: checkpoint\debug\9k301vgogz
-                                     exp_id: 9k301vgogz
+                                     dump_path: checkpoint\debug\sgg4wnjwyb
+                                     exp_id: sgg4wnjwyb
                                      exp_name: debug
                                      final_database_size: 50000
                                      gen_batch_size: 1000
@@ -40,9 +40,10 @@ INFO - 11/18/24 17:01:01 - 0:00:00 - batch_size: 32
                                      type: transformer
                                      weight_decay: 0.01
                                      world_size: 1
-INFO - 11/18/24 17:01:01 - 0:00:00 - The experiment will be stored in checkpoint\debug\9k301vgogz
+INFO - 11/20/24 13:23:57 - 0:00:00 - The experiment will be stored in checkpoint\debug\sgg4wnjwyb
                                      
-INFO - 11/18/24 17:01:01 - 0:00:00 - Running command: python fc_loop.py
+INFO - 11/20/24 13:23:57 - 0:00:00 - Running command: python fc_loop.py
 
-INFO - 11/18/24 17:01:01 - 0:00:00 - seed: 447864874
-INFO - 11/18/24 17:01:01 - 0:00:00 - JULIA_NUM_THREADS is set to 1
+INFO - 11/20/24 13:23:57 - 0:00:00 - seed: 694732920
+INFO - 11/20/24 13:23:57 - 0:00:00 - JULIA_NUM_THREADS is set to 1
+INFO - 11/20/24 13:24:02 - 0:00:05 - Created checkpoint\debug\sgg4wnjwyb/temp.txt and training tokenizer...

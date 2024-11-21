@@ -70,7 +70,7 @@ def get_parser():
                         help="Multi-GPU - Local rank")
     parser.add_argument("--master_port", type=int, default=-1,
                         help="Master port (for multi-node SLURM jobs)")
-    parser.add_argument("--cpu", type=bool_flag, default="false",
+    parser.add_argument("--cpu", type=bool_flag, default="true", # Bailey changed this from false to true
                         help="run on cpu only")
 # debug
     parser.add_argument("--debug_slurm", type=bool_flag, default=False,
@@ -253,6 +253,8 @@ def write_samples(num=10, new_file=False, use_logger=False):
 if __name__ == '__main__':
     parser = get_parser()
     args = parser.parse_args()
+    args.cpu
+    print(args)
     init_distributed_mode(args)
     logger = initialize_exp(args)
     if not os.path.exists(args.dump_path):
@@ -260,10 +262,7 @@ if __name__ == '__main__':
     if args.is_slurm_job:
         init_signal_handler()
     
-    # Bailey changed this
-    #args.device = "cpu"
     args.device = "cpu" if args.cpu else "cuda"
-    # Bailey changed this
 
     if args.seed < 0:
         args.seed = np.random.randint(1_000_000_000)
